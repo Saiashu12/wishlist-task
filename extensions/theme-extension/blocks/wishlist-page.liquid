@@ -4,17 +4,16 @@
 </div>
 <script>
   function displayWishlist() {
-    const container = document.getElementById('wishlist-items');
-    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const container = document.getElementById("wishlist-items");
+    const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     if (wishlist.length === 0) {
-      container.innerHTML = '<p>No items added yet.</p>';
+      container.innerHTML = "<p>No items added yet.</p>";
       return;
     }
-
-    let html = '';
-    wishlist.forEach((item) => {
+    let html = "";
+    wishlist.forEach(item => {
       html += `
-        <div class="wishlist-item" style="display:flex; gap:15px;">
+        <div class="wishlist-item" style="display:flex; gap:15px; margin-bottom:20px;">
           <img src="${item.image}" width="100" style="border-radius:6px;" />
           <div>
             <h3>${item.title}</h3>
@@ -24,18 +23,15 @@
         </div>
       `;
     });
-
     container.innerHTML = html;
   }
-
   function removeWishlist(id) {
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    wishlist = wishlist.filter((p) => p.id != id);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    wishlist = wishlist.filter(p => p.id != id);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
     displayWishlist();
   }
-
-  document.addEventListener('DOMContentLoaded', displayWishlist);
+  document.addEventListener("DOMContentLoaded", displayWishlist);
 </script>
 
 {% schema %}
