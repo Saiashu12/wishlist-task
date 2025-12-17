@@ -2,13 +2,14 @@
   <button 
     class="wishlist-btn" 
     data-product-id="{{ product.id }}"
-    data-title="{{ product.title}}"
-    data-image="{{ product.featured_image}}"
+    data-title="{{ product.title | escape }}"
+    data-image="{{ product.featured_image | img_url: '300x' }}"
     data-handle="{{ product.handle }}"
   >
     ❤️ Add to Wishlist
   </button>
 </div>
+
 <script>
   function updateWishlistButtons() {
     const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -18,7 +19,7 @@
         ? "💔 Remove From Wishlist"
         : "❤️ Add to Wishlist";
     });
-  } 
+  }
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("wishlist-btn")) {
       const item = {
@@ -27,24 +28,19 @@
         image: e.target.dataset.image,
         handle: e.target.dataset.handle
       };
-
       let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
       const exists = wishlist.find(p => p.id == item.id);
-
       if (exists) {
-        wishlist = wishlist. (p => p.id != item.id);
+        wishlist = wishlist.filter(p => p.id != item.id);
       } else {
         wishlist.push(item);
       }
-
       localStorage.setItem("wishlist", JSON.stringify(wishlist));
       updateWishlistButtons();
     }
   });
-
   document.addEventListener("DOMContentLoaded", updateWishlistButtons);
 </script>
-
 {% schema %}
 {
   "name": "Wishlist Button",
